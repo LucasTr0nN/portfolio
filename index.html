@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Lucas De Paula Silva — Full Stack &amp; Automação com IA</title>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <style>
+    :root {
+      --bg: #0D1117;
+      --panel: #151B23;
+      --panel-line: #232B36;
+      --ink: #E6EDF3;
+      --muted: #8B949E;
+      --blue: #58A6FF;
+      --green: #3FB950;
+      --gold: #F0B429;
+      --blue-dim: rgba(88, 166, 255, 0.12);
+      --green-dim: rgba(63, 185, 80, 0.12);
+      --gold-dim: rgba(240, 180, 41, 0.14);
+      --display: 'Space Grotesk', sans-serif;
+      --body: 'IBM Plex Sans', sans-serif;
+      --mono: 'IBM Plex Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--panel-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--panel-line) 1px, transparent 1px);
+      background-size: 48px 48px;
+      opacity: 0.35;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .wrap {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 0 28px;
+      position: relative;
+      z-index: 1;
+    }
+
+    section {
+      padding: 96px 0;
+      border-bottom: 1px solid var(--panel-line);
+    }
+
+    section:last-of-type {
+      border-bottom: none;
+    }
+
+    /* ---------- NAV ---------- */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(13, 17, 23, 0.85);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--panel-line);
+    }
+
+    nav .wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 28px;
+    }
+
+    .nav-brand {
+      font-family: var(--mono);
+      font-size: 14px;
+      color: var(--green);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      transition: color .2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--ink);
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      padding-top: 110px;
+      padding-bottom: 90px;
+      border-bottom: 1px solid var(--panel-line);
+    }
+
+    .terminal {
+      background: var(--panel);
+      border: 1px solid var(--panel-line);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+    }
+
+    .terminal-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      background: #10151D;
+      border-bottom: 1px solid var(--panel-line);
+    }
+
+    .dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+    }
+
+    .dot.r {
+      background: #FF5F56;
+    }
+
+    .dot.y {
+      background: #FFBD2E;
+    }
+
+    .dot.g {
+      background: #27C93F;
+    }
+
+    .terminal-title {
+      margin-left: 8px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .terminal-body {
+      padding: 26px 24px 30px;
+      font-family: var(--mono);
+      font-size: 14px;
+    }
+
+    .terminal-body .line {
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .terminal-body .line .prompt {
+      color: var(--green);
+    }
+
+    .terminal-body .out {
+      color: var(--ink);
+      margin: 0 0 18px 0;
+    }
+
+    .hero-name {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(32px, 6vw, 52px);
+      line-height: 1.08;
+      margin: 4px 0 10px;
+      color: var(--ink);
+    }
+
+    .hero-role {
+      font-size: clamp(15px, 2.4vw, 18px);
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    .hero-role .tag-blue {
+      color: var(--blue);
+    }
+
+    .hero-role .tag-green {
+      color: var(--green);
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 9px;
+      height: 1.1em;
+      background: var(--gold);
+      vertical-align: text-bottom;
+      animation: blink 1s steps(2) infinite;
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+
+    .hero-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .btn {
+      font-family: var(--mono);
+      font-size: 13px;
+      padding: 10px 16px;
+      border-radius: 6px;
+      border: 1px solid var(--panel-line);
+      text-decoration: none;
+      color: var(--ink);
+      transition: border-color .2s, transform .2s, background .2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn.primary {
+      border-color: var(--green);
+      color: var(--green);
+      background: var(--green-dim);
+    }
+
+    .btn.primary:hover {
+      background: rgba(63, 185, 80, 0.2);
+    }
+
+    .btn.alt {
+      border-color: var(--blue);
+      color: var(--blue);
+      background: var(--blue-dim);
+    }
+
+    .btn.alt:hover {
+      background: rgba(88, 166, 255, 0.2);
+    }
+
+    .btn.cur {
+      border-color: var(--white);
+      color: var(--white);
+      background: var(--white-dim);
+    }
+
+    .btn.cur:hover {
+      background: rgba(253, 253, 253, 0.274);
+    }
+
+    /* ---------- SECTION HEADERS ---------- */
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: .06em;
+      color: var(--gold);
+      text-transform: none;
+      margin-bottom: 10px;
+    }
+
+    .eyebrow::before {
+      content: "// ";
+      color: var(--muted);
+    }
+
+    h2 {
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: clamp(24px, 4vw, 32px);
+      margin-bottom: 22px;
+    }
+
+    .lead {
+      color: var(--muted);
+      max-width: 640px;
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    /* ---------- ABOUT ---------- */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 40px;
+      align-items: start;
+      margin-top: 28px;
+    }
+
+    .about-text p {
+      color: #C8D1DB;
+      margin-bottom: 14px;
+    }
+
+    .fact-card {
+      background: var(--panel);
+      border: 1px solid var(--panel-line);
+      border-radius: 10px;
+      padding: 18px 20px;
+      font-family: var(--mono);
+      font-size: 13px;
+    }
+
+    .fact-card dl {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 8px 14px;
+    }
+
+    .fact-card dt {
+      color: var(--muted);
+    }
+
+    .fact-card dd {
+      color: var(--ink);
+    }
+
+    /* ---------- GIT GRAPH (SIGNATURE) ---------- */
+    .graph-wrap {
+      margin-top: 40px;
+    }
+
+    .graph-caption {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    svg.graph {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .branch-label {
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .commit-msg {
+      font-family: var(--mono);
+      font-size: 11.5px;
+    }
+
+    .commit-msg tspan.file {
+      fill: var(--muted);
+    }
+
+    .commit-node {
+      transition: r .2s;
+    }
+
+    .commit-group:hover .commit-node {
+      r: 7;
+    }
+
+    /* mobile fallback list, hidden by default */
+    .graph-mobile {
+      display: none;
+    }
+
+    .track {
+      border-left: 2px solid var(--panel-line);
+      padding-left: 18px;
+      margin-bottom: 26px;
+    }
+
+    .track.blue {
+      border-left-color: var(--blue);
+    }
+
+    .track.green {
+      border-left-color: var(--green);
+    }
+
+    .track h3 {
+      font-family: var(--mono);
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .track.blue h3 {
+      color: var(--blue);
+    }
+
+    .track.green h3 {
+      color: var(--green);
+    }
+
+    .track ul {
+      list-style: none;
+    }
+
+    .track li {
+      font-size: 14px;
+      color: #C8D1DB;
+      margin-bottom: 8px;
+      position: relative;
+      padding-left: 16px;
+    }
+
+    .track li::before {
+      content: "●";
+      position: absolute;
+      left: 0;
+      font-size: 8px;
+      top: 6px;
+      color: var(--muted);
+    }
+
+    .merge-line {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--gold);
+      padding-left: 18px;
+      border-left: 2px solid var(--gold);
+    }
+
+    .project-image {
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    .project-image img {
+      width: 100%;
+      transition: .4s;
+    }
+
+    .project-image:hover img {
+      transform: scale(1.15);
+    }
+
+    /* ---------- SKILLS ---------- */
+    .skill-groups {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px 32px;
+      margin-top: 24px;
+    }
+
+    .skill-group h3 {
+      font-family: var(--mono);
+      font-size: 12.5px;
+      color: var(--muted);
+      margin-bottom: 10px;
+      letter-spacing: .03em;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      font-family: var(--mono);
+      font-size: 12.5px;
+      padding: 5px 10px;
+      border-radius: 5px;
+      background: var(--panel);
+      border: 1px solid var(--panel-line);
+      color: #C8D1DB;
+      transition: border-color .2s, color .2s;
+    }
+
+    .chip:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    /* ---------- FORMACAO / IDIOMAS ---------- */
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-top: 24px;
+    }
+
+    .info-card {
+      background: var(--panel);
+      border: 1px solid var(--panel-line);
+      border-radius: 10px;
+      padding: 22px;
+    }
+
+    .info-card h3 {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--green);
+      margin-bottom: 12px;
+    }
+
+    .info-card p,
+    .info-card li {
+      font-size: 14px;
+      color: #C8D1DB;
+    }
+
+    .info-card ul {
+      list-style: none;
+    }
+
+    .info-card li {
+      margin-bottom: 6px;
+      padding-left: 14px;
+      position: relative;
+    }
+
+    .info-card li::before {
+      content: "—";
+      position: absolute;
+      left: 0;
+      color: var(--muted);
+    }
+
+    .bar-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .bar-label {
+      font-family: var(--mono);
+      font-size: 12.5px;
+      width: 110px;
+      color: var(--muted);
+    }
+
+    .bar-track {
+      flex: 1;
+      height: 6px;
+      background: var(--panel-line);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--green), var(--blue));
+      border-radius: 4px;
+    }
+
+    /* ---------- CONTACT / FOOTER ---------- */
+    footer {
+      padding: 70px 0 50px;
+    }
+
+    .contact-terminal {
+      max-width: 560px;
+    }
+
+    footer .terminal-body .line {
+      margin-bottom: 10px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-top: 22px;
+      font-family: var(--mono);
+      font-size: 13px;
+    }
+
+    .footer-links a {
+      text-decoration: none;
+      color: var(--muted);
+      border-bottom: 1px solid transparent;
+      transition: color .2s, border-color .2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--gold);
+      border-color: var(--gold);
+    }
+
+    .footer-note {
+      margin-top: 40px;
+      font-family: var(--mono);
+      font-size: 11.5px;
+      color: #4B5563;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+
+    .reveal.in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 760px) {
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .skill-groups {
+        grid-template-columns: 1fr;
+      }
+
+      .split {
+        grid-template-columns: 1fr;
+      }
+
+      svg.graph {
+        display: none;
+      }
+
+      .graph-mobile {
+        display: block;
+      }
+
+      section {
+        padding: 64px 0;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
+      }
+
+      html {
+        scroll-behavior: auto;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <nav>
+    <div class="wrap">
+      <div class="nav-brand">~/lucas-de-paula-silva</div>
+      <ul class="nav-links">
+        <li><a href="#sobre">sobre</a></li>
+        <li><a href="#trajetoria">trajetória</a></li>
+        <li><a href="#skills">skills</a></li>
+        <li><a href="#contato">contato</a></li>
+      </ul>
+    </div>
+  </nav>
+  <header class="hero">
+    <div class="wrap">
+      <div class="terminal">
+        <div class="terminal-bar">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="terminal-title">lucas@portfolio — zsh</span>
+        </div>
+        <div class="terminal-body">
+          <div class="line"><span class="prompt">$</span> whoami</div>
+          <p class="hero-name">Lucas De Paula Silva</p>
+          <p class="hero-role">
+            <span class="tag-blue">Desenvolvedor Full Stack</span> +
+            <span class="tag-green">Automação de Processos &amp; Agentes de IA</span>
+            <span class="cursor"></span>
+          </p>
+          <div class="line"><span class="prompt">$</span> cat localizacao.txt</div>
+          <p class="out">Belo Horizonte, MG, Brasil</p>
+          <div class="hero-links"><a class="btn primary"
+              href="https://wa.me/5531982449002?text=Olá%20Lucas!%20Vi%20seu%20portfólio." target="_blank"
+              rel="noopener">
+
+              <i class="fa-brands fa-whatsapp"></i>
+              <span>WhatsApp</span>
+
+            </a><a class="btn cur" href="arq/Curriculo.pdf" target="_blank">
+              <i class="fa-solid fa-file-arrow-down"></i>
+              Currículo
+            </a><a class="btn alt" href="https://github.com/LucasTr0nN" target="_blank" rel="noopener">
+
+              <i class="fa-brands fa-github"></i>
+              <span>GitHub</span>
+
+            </a><a class="btn" href="https://linkedin.com/in/lucas-de-paula-33894a204" target="_blank" rel="noopener">
+
+              <i class="fa-brands fa-linkedin"></i>
+              <span>LinkedIn</span>
+
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <section id="sobre">
+    <div class="wrap">
+      <p class="eyebrow">sobre</p>
+      <h2 class="reveal">Duas frentes, uma engenharia só</h2>
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <p>Lucas constrói aplicações web de ponta a ponta — APIs REST, bancos relacionais e não relacionais,
+            front-ends com React e Angular — e usa essa mesma base para levantar automações e agentes de IA que tiram
+            trabalho manual de operações comerciais e de atendimento.</p>
+          <p>Na prática, isso significa integrar sistemas como CRM e WhatsApp, orquestrar fluxos com n8n e UiPath, e
+            aplicar prompt engineering sobre LLMs para que a automação realmente resolva o problema do time — não apenas
+            automatize uma tarefa isolada.</p>
+          <p>Formado em Análise e Desenvolvimento de Sistemas pela PUC Minas, com inglês intermediário (B2) e uma base
+            técnica que cruza desenvolvimento de software, dados e infraestrutura em nuvem.</p>
+        </div>
+        <div class="fact-card reveal">
+          <dl>
+            <dt>Local</dt>
+            <dd>Belo Horizonte, MG</dd>
+            <dt>E-mail</dt>
+            <dd>lucaspaula2103@gmail.com</dd>
+            <dt>WhatsApp</dt>
+            <dd><a href="https://wa.me/5531982449002?text=Olá%20Lucas!%20Vi%20seu%20portfólio." rel="noopener"
+                target="_blank">Conversar</a></dd>
+            <dt>Formação</dt>
+            <dd>Análise e Desenvolvimento de Sistemas — PUC Minas</dd>
+            <dt>Idiomas</dt>
+            <dd>Português (nativo), Inglês (B2)</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="trajetoria">
+    <div class="wrap">
+      <p class="eyebrow">trajetória</p>
+      <h2 class="reveal">git log --graph --all</h2>
+      <p class="lead reveal">Duas branches de experiência que crescem juntas e convergem no mesmo perfil profissional.
+      </p>
+      <div class="graph-wrap reveal">
+        <p class="graph-caption">feature/full-stack e feature/automacao-ia → merge em main</p>
+        <svg class="graph" fmlns="http://www.w3.org/2000/svg" viewbox="0 0 880 340">
+          <!-- main trunk -->
+          <path d="M 40 170 L 140 170" fill="none" stroke="#8B949E" stroke-width="2"></path>
+          <!-- blue branch splits up -->
+          <path d="M 140 170 C 200 170, 220 70, 280 70 L 560 70" fill="none" stroke="#58A6FF" stroke-width="2"></path>
+          <!-- green branch splits down -->
+          <path d="M 140 170 C 200 170, 220 270, 280 270 L 560 270" fill="none" stroke="#3FB950" stroke-width="2">
+          </path>
+          <!-- merge back to main -->
+          <path d="M 560 70 C 640 70, 660 170, 720 170" fill="none" stroke="#58A6FF" stroke-width="2"></path>
+          <path d="M 560 270 C 640 270, 660 170, 720 170" fill="none" stroke="#3FB950" stroke-width="2"></path>
+          <path d="M 720 170 L 840 170" fill="none" stroke="#F0B429" stroke-width="2.5"></path>
+          <!-- start node -->
+          <circle cx="40" cy="170" fill="#8B949E" r="6"></circle>
+          <text class="commit-msg" fill="#8B949E" text-anchor="middle" x="40" y="150">início</text>
+          <!-- blue commits -->
+          <g class="commit-group">
+            <circle class="commit-node" cx="330" cy="70" fill="#58A6FF" r="6"></circle>
+            <text class="commit-msg" fill="#E6EDF3" text-anchor="middle" x="330" y="52">feat: APIs REST &amp;
+              front-end</text>
+            <text class="branch-label" fill="#58A6FF" text-anchor="middle" x="330" y="34">feature/full-stack</text>
+          </g>
+          <g class="commit-group">
+            <circle class="commit-node" cx="550" cy="70" fill="#58A6FF" r="6"></circle>
+            <text class="commit-msg" fill="#E6EDF3" text-anchor="middle" x="550" y="52">feat: bancos SQL &amp;
+              NoSQL</text>
+          </g>
+          <!-- green commits -->
+          <g class="commit-group">
+            <circle class="commit-node" cx="330" cy="270" fill="#3FB950" r="6"></circle>
+            <text class="commit-msg" fill="#E6EDF3" text-anchor="middle" x="330" y="296">feat: workflows n8n +
+              RPA</text>
+            <text class="branch-label" fill="#3FB950" text-anchor="middle" x="330" y="314">feature/automacao-ia</text>
+          </g>
+          <g class="commit-group">
+            <circle class="commit-node" cx="550" cy="270" fill="#3FB950" r="6"></circle>
+            <text class="commit-msg" fill="#E6EDF3" text-anchor="middle" x="550" y="296">feat: agentes de IA com
+              LLMs</text>
+          </g>
+          <!-- merge node -->
+          <circle cx="720" cy="170" fill="#F0B429" r="7"></circle>
+          <text class="commit-msg" fill="#F0B429" font-weight="600" text-anchor="middle" x="720" y="150">merge: Lucas De
+            Paula Silva</text>
+          <text class="commit-msg" fill="#8B949E" text-anchor="end" x="850" y="150">main</text>
+        </svg>
+        <!-- mobile fallback -->
+        <div class="graph-mobile">
+          <div class="track blue">
+            <h3>feature/full-stack</h3>
+            <ul>
+              <li>Desenvolvimento e manutenção de aplicações full stack em ambiente corporativo.</li>
+              <li>Criação e consumo de APIs REST, com documentação em Swagger/Postman.</li>
+              <li>Modelagem de bancos relacionais (MySQL, MariaDB, PostgreSQL) e não relacionais (MongoDB).</li>
+              <li>Correção de bugs, testes e versionamento com Git/GitHub.</li>
+            </ul>
+          </div>
+          <div class="track green">
+            <h3>feature/automacao-ia</h3>
+            <ul>
+              <li>Criação de workflows com n8n e RPA com UiPath para automação comercial.</li>
+              <li>Desenvolvimento de agentes de IA com LLMs e prompt engineering.</li>
+              <li>Integração com Kommo CRM, WhatsApp, APIs REST e serviços em nuvem (AWS, Docker).</li>
+              <li>Fluxos que reduziram tarefas manuais e otimizaram o atendimento ao cliente.</li>
+            </ul>
+          </div>
+          <div class="merge-line">merge → Lucas De Paula Silva: engenharia full stack aplicada à automação</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projetos">
+    <div class="wrap">
+      <p class="eyebrow">projetos</p>
+      <h2>Projetos em destaque</h2>
+
+      <div class="split">
+
+        <div class="info-card">
+          <h3>Automação de Atendimento com IA</h3>
+
+          <div class="project-image">
+            <a href="img/AutomacaoAtendimento.png" target="_blank">
+              <img src="img/AutomacaoAtendimento.png" alt="Automação de Atendimento">
+            </a>
+          </div>
+
+          <p>
+            Fluxo desenvolvido em <strong>n8n</strong> integrado ao
+            <strong>WhatsApp</strong>, <strong>Kommo CRM</strong> e
+            Inteligência Artificial para automatizar atendimentos,
+            qualificar leads e reduzir tarefas operacionais.
+          </p>
+        </div>
+
+        <div class="info-card">
+          <h3>Automação de E-mails</h3>
+
+          <div class="project-image">
+            <a href="img/AutomacaoEmail.png" target="_blank">
+              <img src="img/AutomacaoEmail.png" alt="Automação de E-mails">
+            </a>
+          </div>
+
+          <p>
+            Workflow responsável pelo envio automático de e-mails
+            personalizados utilizando APIs REST, gatilhos e integrações
+            entre diferentes serviços.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <section id="skills">
+    <div class="wrap">
+      <p class="eyebrow">stack</p>
+      <h2 class="reveal">Habilidades técnicas</h2>
+      <div class="skill-groups reveal">
+        <div class="skill-group">
+          <h3>LINGUAGENS</h3>
+          <div class="chips">
+            <span class="chip">Python</span><span class="chip">C#</span><span class="chip">JavaScript</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>AUTOMAÇÃO &amp; IA</h3>
+          <div class="chips">
+            <span class="chip">n8n</span><span class="chip">UiPath</span><span class="chip">Agentes de IA</span><span
+              class="chip">Prompt Engineering</span><span class="chip">LLMs</span><span class="chip">Webhooks</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>FRONTEND</h3>
+          <div class="chips">
+            <span class="chip">React</span><span class="chip">Angular</span><span class="chip">HTML</span><span
+              class="chip">CSS</span><span class="chip">Bootstrap</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>BACKEND &amp; APIS</h3>
+          <div class="chips">
+            <span class="chip">Node.js</span><span class="chip">APIs REST</span><span class="chip">Swagger</span><span
+              class="chip">Postman</span><span class="chip">JSON Server</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>BANCO DE DADOS</h3>
+          <div class="chips">
+            <span class="chip">PostgreSQL</span><span class="chip">MySQL</span><span class="chip">MariaDB</span><span
+              class="chip">MongoDB</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>CLOUD, INTEGRAÇÕES &amp; DEVOPS</h3>
+          <div class="chips">
+            <span class="chip">AWS</span><span class="chip">Docker</span><span class="chip">Git</span><span
+              class="chip">GitHub</span><span class="chip">Kommo CRM</span><span class="chip">WhatsApp API</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="formacao">
+    <div class="wrap">
+      <p class="eyebrow">base</p>
+      <h2 class="reveal">Formação &amp; idiomas</h2>
+      <div class="split reveal">
+        <div class="info-card">
+          <h3>FORMAÇÃO ACADÊMICA</h3>
+          <p style="margin-bottom:10px;">Tecnólogo em Análise e Desenvolvimento de Sistemas</p>
+          <p style="color:#8B949E; margin-bottom:16px;">PUC Minas — concluído</p>
+          <p style="margin-bottom:10px;">Pós-graduação em Engenharia de Software</p>
+          <p style="color:#8B949E; margin-bottom:16px;">PUC Minas — Em Andamento</p>
+          <h3 style="margin-top:18px;">OUTRAS CONQUISTAS</h3>
+          <ul>
+            <li>Inglês — English Live, Pacote Ouro</li>
+            <li>Redes e Infraestrutura</li>
+            <li>Montagem e Manutenção de Computadores</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3>IDIOMAS</h3>
+          <div class="bar-row">
+            <span class="bar-label">Português</span>
+            <div class="bar-track">
+              <div class="bar-fill" style="width:100%"></div>
+            </div>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">Inglês (B2)</span>
+            <div class="bar-track">
+              <div class="bar-fill" style="width:65%"></div>
+            </div>
+          </div>
+          <h3 style="margin-top:26px;">CONCEITOS</h3>
+          <ul>
+            <li>Programação Orientada a Objetos</li>
+            <li>Metodologias Ágeis</li>
+            <li>APIs REST &amp; versionamento com Git</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer id="contato">
+    <div class="wrap">
+      <p class="eyebrow">contato</p>
+      <h2 class="reveal">git push origin proxima-oportunidade</h2>
+
+      <div class="terminal contact-terminal reveal">
+        <div class="terminal-bar">
+          <span class="dot r"></span>
+          <span class="dot y"></span>
+          <span class="dot g"></span>
+          <span class="terminal-title">contato.sh</span>
+        </div>
+
+        <div class="terminal-body">
+
+          <div class="line">
+            <span class="prompt">$</span> ./enviar-mensagem.sh
+          </div>
+
+          <p class="out">
+            Vamos conversar sobre a próxima automação, integração, API ou projeto Full Stack.
+          </p>
+
+          <div class="footer-links">
+
+            <!-- Email -->
+            <a href="mailto:lucaspaula2103@gmail.com?subject=Contato%20pelo%20Portf%C3%B3lio&body=Olá%20Lucas,%0A%0AVi%20seu%20portfólio%20e%20gostaria%20de%20conversar%20sobre..."
+              target="_blank">
+
+              <i class="fa-solid fa-envelope"></i>
+              <span>E-mail</span>
+
+            </a>
+
+            <!-- WhatsApp -->
+            <a href="https://wa.me/5531982449002?text=Olá%20Lucas!%20Vi%20seu%20portfólio%20e%20gostaria%20de%20conversar."
+              target="_blank" rel="noopener">
+
+              <i class="fa-brands fa-whatsapp"></i>
+              <span>WhatsApp</span>
+
+            </a>
+            <!-- Currículo -->
+            <a href="arq/Curriculo.pdf" target="_blank">
+              <i class="fa-solid fa-file-arrow-down"></i>
+              Currículo
+            </a>
+
+            <!-- LinkedIn -->
+            <a href="https://linkedin.com/in/lucas-de-paula-33894a204" target="_blank" rel="noopener">
+
+              <i class="fa-brands fa-linkedin"></i>
+              <span>LinkedIn</span>
+
+            </a>
+
+            <!-- GitHub -->
+            <a href="https://github.com/LucasTr0nN" target="_blank" rel="noopener">
+
+              <i class="fa-brands fa-github"></i>
+              <span>GitHub</span>
+
+            </a>
+
+          </div>
+        </div>
+      </div>
+
+      <p class="footer-note">
+        <i class="fa-solid fa-location-dot"></i>
+        Belo Horizonte, MG • Brasil
+      </p>
+
+    </div>
+  </footer>
+  <script>
+    const revealEls = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.15 });
+    revealEls.forEach(el => io.observe(el));
+  </script>
+</body>
+
+</html>
